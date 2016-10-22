@@ -2,17 +2,18 @@
  * Created by chenyihui on 16/9/23.
  */
 var express = require('express');
-var route = require('route');
+var routes = require('./routes');
 var http = require('http');
 var path = require('path');
 
 var mongoskin = require('mongoskin');
 var dbUrl = 'mongodb://@localhost:27017/blog';
-var db = mongoskin(dbUrl,{safe:true});
+var db =  process.env.MONGOHQ_URL || mongoskin.db(dbUrl,{safe:true});
 var collections = {
     articles:db.collection('articles'),
     users:db.collection('users')
 };
+console.log(JSON.stringify(collections.articles));
 
 var session = require('express-session'),
     logger = require('morgan'),
@@ -36,7 +37,7 @@ app.set('view engine','jade');
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded);
+app.use(bodyParser.urlencoded());
 app.use(methodOverride());
 app.use(require('stylus').middleware(__dirname + '/public'));
 
@@ -45,10 +46,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 if('development' == app.get('env')){
     app.use(errorHandler());
 }
-
-app.all('*',function (req,res) {
-    res.render('index');
-});
 
 app.get('/',routes.index);
 app.get('/login',routes.user.login);
