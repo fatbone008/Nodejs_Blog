@@ -1,0 +1,30 @@
+//
+   Created by chenyihui on 2016/10/22.
+
+extends layout
+block page
+    - var main = 'admin'
+block content
+    div.main
+        if(articles.length === 0)
+            p
+                | Nothing to display. Add a new
+                a(href="/post") article
+                | .
+        else
+            table.table.table-stripped
+                thead
+                    tr
+                        th(cols="2") Actions
+                        th Post title
+                tbody
+                    each article,index in articles
+                        tr(data-id="#{article._id}" class=(!article.published)?'unpublished':'')
+                            td.action
+                                button.btn.btn-danger.btn-sm.remove(type="button")
+                                    span.glyphicon.glyphicon-remove(title="Remove")
+                            td.action
+                                button.btn.btn-default.btn-sm.publish(type="button")
+                                    span.glyphicon(class=(article.published)?"glyphicon-pause":"glyphicon-play",title=(article.published)?"Unpublish":"Published")
+                            td= article.title
+            script(type="text/javascript" src="js/admin.js")

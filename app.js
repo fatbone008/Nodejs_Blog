@@ -13,7 +13,7 @@ var collections = {
     articles:db.collection('articles'),
     users:db.collection('users')
 };
-console.log(JSON.stringify(collections.articles));
+// console.log(JSON.stringify(collections.articles));
 
 var session = require('express-session'),
     logger = require('morgan'),
@@ -25,11 +25,11 @@ var session = require('express-session'),
 var app = express();
 app.locals.appTitle = 'blog-express';
 
-app.use(function (res, req, next) {
+app.use(function (req, res, next) {
     if(!collections.articles || !collections.users) return next(new Error('NO collections.'))
     req.collections = collections;
     return next();
-})
+});
 
 app.set('port',3000);
 app.set('views',path.join(__dirname,'views'));

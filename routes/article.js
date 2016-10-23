@@ -2,8 +2,8 @@
  * Created by chenyihui on 2016/10/16.
  */
 exports.show = function (req, res, next) {
-    if(!req.param.slug) return next(new Error('No article slug.'));
-    req.collections.articles.findOne({slug:req.param.slug},function (error, article) {
+    if(!req.params.slug) return next(new Error('No article slug.'));
+    req.collections.articles.findOne({slug:req.params.slug},function (error, article) {
         if(error) return next(error);
         if(!article.published) return res.send(401);
         res.render('article',article);

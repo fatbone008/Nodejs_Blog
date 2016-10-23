@@ -3,5 +3,6 @@
   <component name="JavaScriptLibraryMappings">
     <file url="file://$PROJECT_DIR$/app.js" libraries="{Blog/node_modules}" />
     <file url="file://$PROJECT_DIR$/routes/index.js" libraries="{Blog/node_modules}" />
+    <file url="file://$PROJECT_DIR$/routes/user.js" libraries="{Blog/node_modules}" />
   </component>
 </project>
